@@ -42,7 +42,7 @@ def get_orders():
 def create_order(dto : Annotated[OrderItem, Form()]):
     repo.append(dto)
 @app.post("/update")
-def update_order(dto: Annotated[UpdateOrderDTO, Form()]):
+def update_order(dto : Annotated[UpdateOrderDTO, Form()]):
     for o in repo:
         if o.number == dto.number:
             if dto.status != o.status and dto.status != "":
