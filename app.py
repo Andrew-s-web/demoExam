@@ -1,4 +1,5 @@
-from fastapi import FastAPI
+from typing import Annotated
+from fastapi import FastAPI, Form
 import datetime
 from pydantic import BaseModel
 
@@ -28,3 +29,6 @@ app = FastAPI()
 @app.get("/orders")
 def get_orders():
     return repo
+@app.post("/orders")
+def create_order(dto : Annotated[OrderItem, Form()]):
+    repo.append(dto)

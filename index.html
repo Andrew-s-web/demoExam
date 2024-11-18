@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Создание заявки</title>
+</head>
+<body>
+    <form action="http://localhost:8080/orders" method="post">
+        <input required placeholder="number" type="number" name="number"/>
+        <input required placeholder="startDate" type="date" name="startDate"/>
+        <input required placeholder="device" type="text" name="device"/>
+        <input required placeholder="problemType" type="text" name="problemType"/>
+        <input required placeholder="description" type="text" name="description"/>
+        <input required placeholder="client" type="text" name="client"/>
+        <select name="status">
+            <option>В ожидании</option>
+            <option>В работе</option>
+            <option>Выполнено</option>
+        </select>
+        <input type="submit" value="Создать"/>
+
+    </form>
+</body>
+</html>
