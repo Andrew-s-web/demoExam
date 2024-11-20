@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Список заявок</title>
+</head>
+<body>
+    <table>
+      <tr>
+        <th>Номер заявки</th>
+        <th>Дата добавления</th>
+        <th>Оборудование</th>
+        <th>Тип неисправности</th>
+        <th>Описание проблемы</th>
+        <th>Клиент</th>
+        <th>Статус</th>
+        <th>Мастер</th>
+      </tr>
+    </table>
+    <script>
+      let table = document.querySelector("table");
+      GetOrders()
+      async function GetOrders() {
+        let response = await fetch("http://127.0.0.1:8000/orders").then(data => data.json())
+        if (response.method) {
+            alert(response.message)
+        }
+          response.repo.forEach(o => {
+              let tr = document.createElement("tr")
+
+              tr.innerHTML = `
+                <td>${o.number}</td>
+                <td>${o.startDate}</td>
+                <td>${o.device}</td>
+                <td>${o.problemType}</td>
+                <td>${o.description}</td>
+                <td>${o.client}</td>
+                <td>${o.status}</td>
+                <td>${o.master}</td>
+              `;
+
+              table.append(tr)
+          })
+      }
+    </script>
+</body>
+</html>

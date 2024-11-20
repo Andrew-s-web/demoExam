@@ -2,6 +2,7 @@ from typing import Annotated, Optional
 from fastapi import FastAPI, Form
 import datetime
 from pydantic import BaseModel
+from fastapi.middleware.cors import CORSMiddleware
 
 
 class OrderItem(BaseModel):
@@ -52,6 +53,13 @@ repo = [
 ]
 app = FastAPI()
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=['*'],
+    allow_methods=['*'],
+    allow_headers=['*']
+)
+
 message = ''
 
 @app.get("/orders")
@@ -60,9 +68,11 @@ def get_orders(param=None):
     if param:
         return {'repo': [o for o in repo if o.number == int(param)], "message": message}
     return {'repo': repo, "message": message}
+
 @app.post("/orders")
 def create_order(dto : Annotated[OrderItem, Form()]):
     repo.append(dto)
+
 @app.post("/update")
 def update_order(dto : Annotated[UpdateOrderDTO, Form()]):
     global message
