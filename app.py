@@ -1,7 +1,7 @@
-from typing import Annotated, Optional
+from typing import Annotated, Optional, List
 from fastapi import FastAPI, Form
 import datetime
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from fastapi.middleware.cors import CORSMiddleware
 
 
@@ -14,12 +14,14 @@ class OrderItem(BaseModel):
     client : str
     status : str
     master : Optional[str] = None
+    comments : List[str] = Field(default_factory=list)
 
 class UpdateOrderDTO(BaseModel):
     number : int
     status : Optional[str] = None
     description : Optional[str] = None
     master : Optional[str] = None
+    comment : Optional[str] = None
 
 
 repo = [
@@ -77,15 +79,18 @@ def create_order(dto : Annotated[OrderItem, Form()]):
 @app.post("/update")
 def update_order(dto : Annotated[UpdateOrderDTO, Form()]):
     global message
-    buffer = message
     for o in repo:
         if o.number == dto.number:
             if dto.status != o.status and dto.status != "":
                 o.status = dto.status
-                buffer += f"Статус заявки №{o.number} изменен\n"
+                message += f"Статус заявки №{o.number} изменен\n"
+                if o.status.lower() == "выполнено":
+                    message += f"Заявка №{o.number} завершена\n"
             if dto.description != "":
                 o.description = dto.description
             if dto.master != "":
                 o.master = dto.master
+            if dto.comment != None and dto.comment != "":
+                o.comments.append(dto.comment)
             return o
     return "Не найдено"
