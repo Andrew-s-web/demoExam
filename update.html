@@ -8,7 +8,8 @@
     <a href="create.html">Создание заявки</a>
     <a href="orders.html">Список заявок</a>
     <a href="update.html">Обновление заявки</a>
-    <form action="http://localhost:8000/update" method="post">
+    <iframe name="frame" style="display: none"></iframe>
+    <form target="frame" action="http://localhost:8000/update" method="post">
         <input required placeholder="number" type="number" name="number"/>
         <input placeholder="description" type="text" name="description"/>
         <input placeholder="master" type="text" name="master"/>
