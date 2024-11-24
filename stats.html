@@ -27,6 +27,10 @@
     th, td { border: 1px solid black;}
 </style>
 <script>
+    if (!sessionStorage.getItem("token")){
+        window.location.href = "/auth.html";
+    }
+
     let complete_count = document.getElementById("complete_count");
     let average_time_to_complete = document.getElementById("average_time_to_complete");
     let stat_table = document.querySelector("tbody");

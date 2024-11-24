@@ -29,12 +29,18 @@
 
       </tbody>
     </table>
-    <script>
-      let table = document.querySelector("tbody");
 
-      GetOrders()
+</body>
+<script>
+    if (!sessionStorage.getItem("token")){
+        window.location.href = "/auth.html";
+    }
 
-      async function GetOrders(param = null) {
+    let table = document.querySelector("tbody");
+
+    GetOrders()
+
+    async function GetOrders(param = null) {
         let response = param ?
             await fetch(`http://127.0.0.1:8000/orders?param=${param}`).then(data => data.json()) :
             await fetch("http://127.0.0.1:8000/orders").then(data => data.json())
@@ -66,5 +72,4 @@
           GetOrders(param);
       }
     </script>
-</body>
 </html>
